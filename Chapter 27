@@ -1,0 +1,46 @@
+import java.io.File
+
+//chp 27 Scope functions
+//let run with apply also are keywords in scope functions
+
+data class Person(var name: String, var age: Int, var city: String){// playground let
+        fun moveTo(newCity: String){city = newCity}
+        fun incrementAge(){age++}
+}
+data class Person2(val name: String, var age: Int = 0, var city: String ="")  //playground apply
+
+fun main(args:Array<String>) {
+
+        Person("Alice", 23, "Amsterdam").let { //let
+                println(it)
+                it.moveTo("London")
+                it.incrementAge()
+                println(it)
+        }
+        val numbers = mutableListOf("one", "two", "three", "four", "five", "six")//with
+        with(numbers){
+                println("'with' is called with argument $this")
+                println ("It contains $size elements")
+        }
+        val sb = StringBuilder()//run
+        sb.append(" Hello")
+        sb.append(" World ")
+        val str = sb.toString()
+        val str2 = sb.run{
+                append(" Go")
+                append(" Yankees")
+                toString()
+        }
+        println(str)
+        println(str2)
+        val adam = Person2("Adam").apply{ //apply
+                age = 32
+                city = "London"
+        }
+          println(adam)
+
+        val file = File("example.txt") .also {  //also
+                println("file ${it.name} is being created")
+                it.createNewFile()
+        }
+}
